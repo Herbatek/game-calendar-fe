@@ -1,0 +1,4 @@
+.registerForm__button--center {
+    display: flex;
+    justify-content: center;
+}

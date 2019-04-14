@@ -1,0 +1,12 @@
+.main-container {
+  display: flex;
+  background-color: #282828;
+  min-height: 100vh;
+}
+
+.main-content {
+  display: flex;
+  margin: 0;
+  color: antiquewhite;
+  min-height: calc(100vh - 94px);
+}
