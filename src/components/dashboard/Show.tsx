@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import CalendarHeader from './CalendarHeader';
+import CalendarBody from './CalendarBody';
 import './Show.css';
 
 interface IProps {
@@ -8,7 +10,8 @@ interface IProps {
 }
 
 interface IState {
-
+    numberOfDaysInCurrentMonth: number,
+    currentMonth: string
 }
 
 class DashboardShow extends Component<IProps, IState> {
@@ -19,46 +22,27 @@ class DashboardShow extends Component<IProps, IState> {
 
     componentDidMount() {
         this.setState({
-            numberOfDaysInCurrentMonth: this.getNumberOfDaysInCurrentMonth(),
-            currentMonth: this.getCurrentMonthName()
+            numberOfDaysInCurrentMonth: DashboardShow.getNumberOfDaysInCurrentMonth(),
+            currentMonth: DashboardShow.getCurrentMonthName()
         })
     }
 
     render() {
         return (
             <div>
-                <p>{this.state.currentMonth}</p>
-                {this.renderCalendar()}
+                <CalendarHeader monthName={this.state.currentMonth}/>
+                <CalendarBody numberOfDaysInMonth={this.state.numberOfDaysInCurrentMonth}/>
             </div>
         );
     }
 
-    renderCalendar() {
-        const dayItems = [];
-        for (let i = 0; i < this.state.numberOfDaysInCurrentMonth; i++)
-            dayItems.push(
-                <div className='calendar__singleDay' key={i}>
-                    <div className='singleDay__header'>
-                        {i + 1}
-                    </div>
-                    <div className='singleDay__body'>
-
-                    </div>
-                </div>);
-        return (
-            <div className='calendar__container'>
-                {dayItems}
-            </div>
-        )
+    static getCurrentMonthName() {
+        return new Date().toLocaleString('en-uk', {month: 'long'})
     }
 
-    getNumberOfDaysInCurrentMonth() {
+    static getNumberOfDaysInCurrentMonth() {
         const today = new Date();
         return new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-    }
-
-    getCurrentMonthName() {
-        return new Date().toLocaleString('en-uk', {month: 'long'})
     }
 }
 

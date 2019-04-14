@@ -1,0 +1,17 @@
+.calendar__container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width: 720px) {
+    .calendar__container {
+        grid-template-columns: 1fr 1fr 1fr 1fr ;
+    }
+}
+
+@media (min-width: 1200px) {
+    .calendar__container {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+}
