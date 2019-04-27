@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import './DayPremieresItem.css';
 
 interface IProps {
-    dayNumber: number
+    dayNumber: number,
+    games: string[]
 }
 
 interface IState {
@@ -11,17 +12,15 @@ interface IState {
 
 class DayPremieresItem extends Component<IProps, IState> {
     render() {
-        const {dayNumber} = this.props;
+        const {dayNumber, games} = this.props;
         return (
-            <div className='dayPremieresItem' key={dayNumber}>
+            <div className='dayPremieresItem'>
                 <div className='dayPremieresItem__header'>
                     <label>{dayNumber + 1}</label>
                 </div>
                 <div className='dayPremieresItem__body'>
                     <ul>
-                        <li>The Witcher 3 Wild Hunt</li>
-                        <li>Counter Strike: Global Offensive 2</li>
-                        <li>Conquer 3.0</li>
+                        {games.map(game => <li key={games.indexOf(game)}>{game}</li>)}
                     </ul>
                 </div>
             </div>);

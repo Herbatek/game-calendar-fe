@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import CalendarHeader from './CalendarHeader';
-import CalendarBody from './CalendarBody';
+import Calendar from './Calendar';
+import {getNumberOfDaysInCurrentMonth, getCurrentMonthName} from '../../util/DateUtil';
 import './Show.css';
 
 interface IProps {
@@ -22,27 +23,19 @@ class DashboardShow extends Component<IProps, IState> {
 
     componentDidMount() {
         this.setState({
-            numberOfDaysInCurrentMonth: DashboardShow.getNumberOfDaysInCurrentMonth(),
-            currentMonth: DashboardShow.getCurrentMonthName()
+            numberOfDaysInCurrentMonth: getNumberOfDaysInCurrentMonth(),
+            currentMonth: getCurrentMonthName()
         })
     }
 
     render() {
+        const {currentMonth, numberOfDaysInCurrentMonth} = this.state;
         return (
             <div>
-                <CalendarHeader monthName={this.state.currentMonth}/>
-                <CalendarBody numberOfDaysInMonth={this.state.numberOfDaysInCurrentMonth}/>
+                <CalendarHeader monthName={currentMonth}/>
+                <Calendar numberOfDaysInMonth={numberOfDaysInCurrentMonth}/>
             </div>
         );
-    }
-
-    static getCurrentMonthName() {
-        return new Date().toLocaleString('en-uk', {month: 'long'})
-    }
-
-    static getNumberOfDaysInCurrentMonth() {
-        const today = new Date();
-        return new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
     }
 }
 
