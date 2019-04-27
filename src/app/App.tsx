@@ -1,20 +1,23 @@
-import React, {Component} from 'react';
+import React, {Component, Suspense, lazy} from 'react';
 import {Route, withRouter, Switch, RouteComponentProps} from "react-router-dom";
+import {Container} from "semantic-ui-react";
 import {getCurrentUser} from "../util/APIUtils";
-import './App.css';
 import {ACCESS_TOKEN} from "../constants";
-import {Loader, Dimmer, Container} from "semantic-ui-react";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
-import DashboardShow from "../components/dashboard/Show";
-import LoginUser from "../components/user/login/Login";
-import RegisterUser from "../components/user/register/Register";
-import ShowUserProfile from "../components/user/profille/Show";
+import Loader from '../components/common/Loader';
 import PrivateRoute from "../components/common/PrivateRoute";
-import GameShow from "../components/game/Show";
-import NotFound from "../components/common/NotFound";
+import './App.css';
+
+const DashboardShow = lazy(() => import('../components/dashboard/Show'));
+const RegisterUser = lazy(() => import('../components/user/register/Register'));
+const ShowUserProfile = lazy(() => import('../components/user/profile/Show'));
+const LoginUser = lazy(() => import('../components/user/login/Login'));
+const GameShow = lazy(() => import('../components/game/Show'));
+const NotFound = lazy(() => import('../components/common/NotFound'));
 
 interface IProps extends RouteComponentProps<any> {
+
 }
 
 class App extends Component<IProps> {
@@ -65,11 +68,7 @@ class App extends Component<IProps> {
 
     render() {
         if (this.state.isLoading) {
-            return (
-                <Dimmer active>
-                    <Loader/>
-                </Dimmer>
-            )
+            return <Loader/>
         }
         return (
             <Container fluid={true} className='main-container'>
@@ -77,19 +76,22 @@ class App extends Component<IProps> {
                         currentUser={this.state.currentUser}
                         onLogout={this.handleLogout}/>
                 <Container fluid={true} className='main-content'>
-                    <Switch>
-                        <Route exact path='/' render={props => <DashboardShow
-                            isAuthenticated={this.state.isAuthenticated}
-                            currentUser={this.state.currentUser}
-                            onLogout={this.handleLogout} {...props}/>}/>
-                        <Route path="/login" render={(props) => <LoginUser onLogin={this.handleLogin} {...props} />}/>
-                        <Route path="/register" render={(props) => <RegisterUser {...props} />}/>
-                        <Route path="/users/:username" render={(props) => <ShowUserProfile
-                            isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}/>
-                        <PrivateRoute isAuthenticated={this.state.isAuthenticated} path="/game/new"
-                                      component={GameShow} handleLogout={this.handleLogout}/>
-                        <Route component={NotFound}/>
-                    </Switch>
+                    <Suspense fallback={<Loader/>}>
+                        <Switch>
+                            <Route exact path='/' render={props => <DashboardShow
+                                isAuthenticated={this.state.isAuthenticated}
+                                currentUser={this.state.currentUser}
+                                onLogout={this.handleLogout} {...props}/>}/>
+                            <Route path="/login" render={(props) => <LoginUser onLogin={this.handleLogin} {...props} />}/>
+                            <Route path="/register" render={(props) => <RegisterUser {...props} />}/>
+                            <Route path="/users/:username" render={(props) => <ShowUserProfile
+                                isAuthenticated={this.state.isAuthenticated}
+                                currentUser={this.state.currentUser} {...props}  />}/>
+                            <PrivateRoute isAuthenticated={this.state.isAuthenticated} path="/game/new"
+                                          component={GameShow} handleLogout={this.handleLogout}/>
+                            <Route component={NotFound}/>
+                        </Switch>
+                    </Suspense>
                 </Container>
                 <Footer/>
             </Container>
