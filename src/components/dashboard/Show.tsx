@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import CalendarHeader from './CalendarHeader';
 import Calendar from './Calendar';
 import {getNumberOfDaysInCurrentMonth, getCurrentMonthName} from '../../util/DateUtil';
@@ -10,33 +10,17 @@ interface IProps {
     onLogout: (redirectTo?: string, notificationType?: string, description?: string) => void
 }
 
-interface IState {
-    numberOfDaysInCurrentMonth: number,
-    currentMonth: string
+export default (props: IProps) => {
+    const [numberOfDaysInCurrentMonth, setNumberOfDaysInCurrentMonth] = useState(0);
+    const [currentMonth, setCurrentMonth] = useState('');
+
+    useEffect(() => setNumberOfDaysInCurrentMonth(getNumberOfDaysInCurrentMonth()), []);
+    useEffect(() => setCurrentMonth(getCurrentMonthName()), []);
+
+    return (
+        <div>
+            <CalendarHeader monthName={currentMonth}/>
+            <Calendar numberOfDaysInMonth={numberOfDaysInCurrentMonth}/>
+        </div>
+    );
 }
-
-class DashboardShow extends Component<IProps, IState> {
-    state = {
-        numberOfDaysInCurrentMonth: 0,
-        currentMonth: ''
-    };
-
-    componentDidMount() {
-        this.setState({
-            numberOfDaysInCurrentMonth: getNumberOfDaysInCurrentMonth(),
-            currentMonth: getCurrentMonthName()
-        })
-    }
-
-    render() {
-        const {currentMonth, numberOfDaysInCurrentMonth} = this.state;
-        return (
-            <div>
-                <CalendarHeader monthName={currentMonth}/>
-                <Calendar numberOfDaysInMonth={numberOfDaysInCurrentMonth}/>
-            </div>
-        );
-    }
-}
-
-export default DashboardShow;
