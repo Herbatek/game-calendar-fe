@@ -54,7 +54,7 @@ interface IRegisterRequest {
     password: string
 }
 
-interface ILoginRequest {
+export interface ILoginRequest {
     usernameOrEmail: string,
     password: string
 }

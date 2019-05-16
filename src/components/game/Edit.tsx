@@ -1,13 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class GameEdit extends Component {
-    render() {
-        return (
-            <div>
-                Content
-            </div>
-        );
-    }
+export default () => {
+    return (
+        <>
+            Content
+        </>
+    );
 }
-
-export default GameEdit;

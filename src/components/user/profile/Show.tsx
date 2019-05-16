@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Show.css'
 
 interface IProps {
@@ -6,18 +6,10 @@ interface IProps {
     currentUser: any
 }
 
-interface IState {
-
+export default (props: IProps) => {
+    return (
+        <div>
+            Profile
+        </div>
+    )
 }
-
-class ShowUserProfile extends Component<IProps, IState> {
-    render() {
-        return (
-            <div>
-                Profile
-            </div>
-        );
-    }
-}
-
-export default ShowUserProfile;
