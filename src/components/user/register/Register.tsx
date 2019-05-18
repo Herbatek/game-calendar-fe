@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import {Button, Form, Segment, Container, FormInputProps} from "semantic-ui-react";
 import {register} from "../../../util/APIUtils";
 import './Register.css'
+import {Redirect} from "react-router";
 
 interface IProps {
-    history: any
+    history: any,
+    isAuthenticated: boolean
 }
 
 interface IState {
@@ -12,6 +14,7 @@ interface IState {
     email: string,
     password: string,
     repeatPassword: string,
+
     [key: string]: string
 }
 
@@ -25,6 +28,10 @@ class RegisterUser extends Component<IProps, IState> {
 
     render() {
         const {username, email, password, repeatPassword} = this.state;
+
+        if (this.props.isAuthenticated) {
+            return <Redirect to={{pathname: "/"}}/>;
+        }
         return (
             <Container>
                 <Segment color='black'>

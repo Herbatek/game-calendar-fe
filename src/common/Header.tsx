@@ -25,7 +25,7 @@ export default (props: IProps) => {
 }
 
 const showLogout = (onLogout: Function) => {
-    return <Button color='red' onClick={() => onLogout} icon='log out' content='Logout'/>
+    return <Button color='red' onClick={() => onLogout()} icon='log out' content='Logout'/>
 };
 
 const showLoginButtons = () => {
