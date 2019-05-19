@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Form, Button, Segment, Grid, Divider, Container, FormInputProps} from 'semantic-ui-react';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {login} from "../../../util/APIUtils";
 import {ACCESS_TOKEN} from "../../../constants";
 import {ILoginRequest} from '../../../util/APIUtils';
@@ -13,19 +13,18 @@ interface IProps {
 }
 
 export default (props: IProps) => {
-    const [usernameOrEmail, setUsernameOrEmail] = useState('');
-    const [password, setPassword] = useState('');
-
     if (props.isAuthenticated) {
         return <Redirect to={{pathname: "/"}}/>;
     }
+
+    const [usernameOrEmail, setUsernameOrEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     return (
         <Container>
             <Segment placeholder color='blue'>
                 <Grid columns={2} relaxed='very' stackable>
                     <Grid.Column>
-                        <SocialLogin/>
                         <Form onSubmit={() => handleSubmit(props.onLogin, {usernameOrEmail, password})}>
                             <Form.Input icon='user' iconPosition='left' label='Username or email'
                                         placeholder='Username or email' name='usernameOrEmail' value={usernameOrEmail}
@@ -38,10 +37,10 @@ export default (props: IProps) => {
                         </Form>
                     </Grid.Column>
                     <Grid.Column verticalAlign='middle'>
-                        <Button as={Link} to="/register" secondary size='big' content='Registration' icon='signup'/>
+                        <SocialLogin/>
                     </Grid.Column>
                 </Grid>
-                <Divider vertical>Or</Divider>
+                <Divider vertical content='or'/>
             </Segment>
         </Container>
     );

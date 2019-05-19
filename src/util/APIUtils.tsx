@@ -48,7 +48,7 @@ export const getUserProfile = (username: string) => {
     });
 };
 
-interface IRegisterRequest {
+export interface IRegisterRequest {
     username: string,
     email: string,
     password: string

@@ -33,7 +33,6 @@ const showLoginButtons = () => {
         <Button.Group>
             <Button as={Link} to='/login' primary icon='sign-in' content='Login'/>
             <Button as={Link} to='/register' secondary icon='signup' content='Register'/>
-            <Button color='google plus' icon='google' content='Google' disabled={true}/>
-            <Button color='facebook' icon='facebook' content='Facebook' disabled={true}/>
-        </Button.Group>)
+        </Button.Group>
+    )
 };

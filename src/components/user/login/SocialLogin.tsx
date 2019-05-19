@@ -1,17 +1,15 @@
 import React from 'react';
-import {FACEBOOK_AUTH_URL, GOOGLE_AUTH_URL} from "../../../constants";
+import {Button} from "semantic-ui-react";
+import './SocialLogin.css';
+import {Link} from "react-router-dom";
 
-interface IProps {
-
-}
-
-export default (props: IProps) => {
-        return (
-            <div className="social-login">
-                <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
-                    Log in with Google</a>
-                <a className="btn btn-block social-btn facebook" href={FACEBOOK_AUTH_URL}>
-                    Log in with Facebook</a>
-            </div>
-        );
+export default () => {
+    return (
+        <div className='socialLogin'>
+            <Button as={Link} to='/auth-google' color='google plus' icon='google' content='Log in with Google'
+                    className='socialLogin__button'/>
+            <Button as={Link} to='/auth-facebook' color='facebook' icon='facebook' content='Log in with Facebook'
+                    className='socialLogin__button'/>
+        </div>
+    );
 }

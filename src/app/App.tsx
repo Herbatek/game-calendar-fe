@@ -2,7 +2,7 @@ import React, {Component, Suspense, lazy} from 'react';
 import {Route, withRouter, Switch, RouteComponentProps} from "react-router-dom";
 import {Container} from "semantic-ui-react";
 import {getCurrentUser} from "../util/APIUtils";
-import {ACCESS_TOKEN} from "../constants";
+import {ACCESS_TOKEN, FACEBOOK_AUTH_URL, GOOGLE_AUTH_URL} from "../constants";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import Loader from '../common/Loader';
@@ -39,7 +39,7 @@ class App extends Component<IProps> {
         console.log("loadCurrentUser");
         getCurrentUser()
             .then(response => {
-                console.log("found");
+                    console.log("found");
                     this.setState({
                         currentUser: response,
                         isAuthenticated: true,
@@ -84,16 +84,24 @@ class App extends Component<IProps> {
                     <Suspense fallback={<Loader/>}>
                         <Switch>
                             <Route exact path='/' component={DashboardShow}/>
-                            <Route path="/users/:username" render={(props) => <ShowUserProfile
+                            <Route path='/users/:username' render={(props) => <ShowUserProfile
                                 isAuthenticated={this.state.isAuthenticated}
                                 currentUser={this.state.currentUser} {...props}  />}/>
-                            <Route path="/login" render={(props) => <LoginUser
+                            <Route path='/login' render={(props) => <LoginUser
                                 onLogin={this.handleLogin}
                                 isAuthenticated={this.state.isAuthenticated} {...props} />}/>
-                            <Route path="/register"
+                            <Route path='/register'
                                    render={(props) => <RegisterUser
                                        isAuthenticated={this.state.isAuthenticated} {...props} />}/>
-                            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}/>
+                            <Route path='/oauth2/redirect' component={OAuth2RedirectHandler}/>
+                            <Route path='/auth-google' component={() => {
+                                window.location.href = GOOGLE_AUTH_URL;
+                                return <Loader/>;
+                            }}/>
+                            <Route path='/auth-facebook' component={() => {
+                                window.location.href = FACEBOOK_AUTH_URL;
+                                return <Loader/>;
+                            }}/>
                             <PrivateRoute isAuthenticated={this.state.isAuthenticated} path="/game/new"
                                           component={GameShow} handleLogout={this.handleLogout}/>
                             <Route component={NotFound}/>

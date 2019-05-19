@@ -18,9 +18,9 @@ export default (props: IProps) => {
     useEffect(() => setCurrentMonth(getCurrentMonthName()), []);
 
     return (
-        <div>
+        <>
             <CalendarHeader monthName={currentMonth}/>
             <Calendar numberOfDaysInMonth={numberOfDaysInCurrentMonth}/>
-        </div>
+        </>
     );
 }

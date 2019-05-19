@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {Button, Form, Segment, Container, FormInputProps} from "semantic-ui-react";
 import {register} from "../../../util/APIUtils";
 import './Register.css'
@@ -9,60 +9,54 @@ interface IProps {
     isAuthenticated: boolean
 }
 
-interface IState {
+interface FormData {
     username: string,
     email: string,
     password: string,
-    repeatPassword: string,
-
-    [key: string]: string
+    repeatPassword: string
 }
 
-class RegisterUser extends Component<IProps, IState> {
-    state = {
-        username: '',
-        email: '',
-        password: '',
-        repeatPassword: ''
-    };
-
-    render() {
-        const {username, email, password, repeatPassword} = this.state;
-
-        if (this.props.isAuthenticated) {
-            return <Redirect to={{pathname: "/"}}/>;
-        }
-        return (
-            <Container>
-                <Segment color='black'>
-                    <Form onSubmit={this.handleSubmit}>
-                        <Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' name='username'
-                                    value={username} onChange={this.handleChange}/>
-                        <Form.Input icon='mail' iconPosition='left' label='Email' placeholder='Email' name='email'
-                                    value={email} onChange={this.handleChange} type={email}/>
-                        <Form.Input icon='lock' iconPosition='left' label='Password' placeholder='Password' name='password'
-                                    value={password} onChange={this.handleChange} type='password'/>
-                        <Form.Input icon='lock' iconPosition='left' label='Repeat Password' placeholder='Repeat Password'
-                                    name='repeatPassword'
-                                    value={repeatPassword} onChange={this.handleChange} type='password'/>
-                        <div className='registerForm__button--center'>
-                            <Button type='submit' primary icon='signup' content='Register'/>
-                        </div>
-                    </Form>
-                </Segment>
-            </Container>
-        );
+export default (props: IProps) => {
+    if (props.isAuthenticated) {
+        return <Redirect to={{pathname: "/"}}/>;
     }
 
-    handleChange = (e: React.FormEvent, {name, value}: FormInputProps) => this.setState({[name]: value});
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
 
-    handleSubmit = () => {
-        const {username, email, password, repeatPassword} = this.state;
-        if (username !== '' && email !== '' && password !== '' && password === repeatPassword) {
-            register(this.state);
-            this.props.history.push('/');
-        }
-    }
+    return (
+        <Container>
+            <Segment color='black'>
+                <Form onSubmit={() => handleSubmit({username, email, password, repeatPassword}, props.history)}>
+                    <Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' name='username'
+                                value={username} onChange={(e: React.FormEvent, {value}: FormInputProps) => setUsername(value)}/>
+                    <Form.Input icon='mail' iconPosition='left' label='Email' placeholder='Email' name='email'
+                                value={email} onChange={(e: React.FormEvent, {value}: FormInputProps) => setEmail(value)}
+                                type={email}/>
+                    <Form.Input icon='lock' iconPosition='left' label='Password' placeholder='Password' name='password'
+                                value={password} onChange={(e: React.FormEvent, {value}: FormInputProps) => setPassword(value)}
+                                type='password'/>
+                    <Form.Input icon='lock' iconPosition='left' label='Repeat Password' placeholder='Repeat Password'
+                                name='repeatPassword'
+                                value={repeatPassword}
+                                onChange={(e: React.FormEvent, {value}: FormInputProps) => setRepeatPassword(value)}
+                                type='password'/>
+                    <div className='registerForm__button--center'>
+                        <Button type='submit' primary icon='signup' content='Register'/>
+                    </div>
+                </Form>
+            </Segment>
+        </Container>
+    );
 }
 
-export default RegisterUser;
+const handleSubmit = (formData: FormData, history: any) => {
+    const {username, email, password, repeatPassword} = formData;
+    if (username !== '' && email !== '' && password !== '' && password === repeatPassword) {
+        register(formData)
+            .then(() => history.push('/'));
+        // TODO: show something to user lul wtf
+    }
+};
