@@ -1,9 +1,10 @@
 import React from 'react';
+import {IGame} from "../../interfaces/IGame";
 import './DayPremieresItem.css';
 
 interface IProps {
     dayNumber: number,
-    games: string[]
+    games: IGame[]
 }
 
 export default (props: IProps) => {
@@ -14,9 +15,10 @@ export default (props: IProps) => {
                 <label>{dayNumber + 1}</label>
             </div>
             <div className='dayPremieresItem__body'>
-                <ul>
-                    {games.map(game => <li key={games.indexOf(game)}>{game}</li>)}
-                </ul>
+                {games !== undefined ? <ul>
+                    {games.map(game => <li key={games.indexOf(game)}>{game.name}</li>)}
+                </ul> : null}
+
             </div>
         </div>)
 };

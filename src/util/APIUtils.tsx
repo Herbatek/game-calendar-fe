@@ -8,7 +8,7 @@ const request = (options: any) => {
     };
 
     if (localStorage.getItem(ACCESS_TOKEN)) {
-        headers.Authorization = 'Bearer ' + localStorage.getItem(ACCESS_TOKEN);
+        headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`;
     }
 
     return axios(Object.assign({}, options, {headers: headers}));
@@ -16,7 +16,7 @@ const request = (options: any) => {
 
 export const login = (loginRequest: ILoginRequest) => {
     return request({
-        url: API_BASE_URL + "/api/auth/login",
+        url: `${API_BASE_URL}/api/auth/login`,
         method: 'POST',
         data: loginRequest
     });
@@ -24,7 +24,7 @@ export const login = (loginRequest: ILoginRequest) => {
 
 export const register = (registerRequest: IRegisterRequest) => {
     return request({
-        url: API_BASE_URL + "/api/auth/register",
+        url: `${API_BASE_URL}/api/auth/register`,
         method: 'POST',
         data: registerRequest
     });
@@ -36,16 +36,23 @@ export const getCurrentUser = () => {
     }
 
     return request({
-        url: API_BASE_URL + "/api/users/me",
+        url: `${API_BASE_URL}/api/users/me`,
         method: 'GET'
     });
 };
 
 export const getUserProfile = (username: string) => {
     return request({
-        url: API_BASE_URL + "api/users/" + username,
+        url: `${API_BASE_URL}/api/users/${username}`,
         method: 'GET'
     });
+};
+
+export const getMonthPremieres = (year: number, month: number) => {
+    return request({
+        url: `${API_BASE_URL}/api/games/monthPremieres?year=${year}&month=${month}`,
+        method: 'GET'
+    })
 };
 
 export interface IRegisterRequest {
