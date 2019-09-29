@@ -1,0 +1,38 @@
+.day {
+    border-radius: 15px;
+    height: 150px;
+    background-color: rgba(18, 3, 4, 0.2);
+    border: 2px solid transparent;
+    margin: 2px;
+}
+
+.day__header {
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    height: 15%;
+}
+
+.day__body {
+    display: flex;
+    height: 85%;
+    justify-content: center;
+    color: #D7D5D5;
+}
+
+.day__list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.day__game {
+    list-style-type: none;
+    text-align: center;
+}
+
+.day__gameName {
+}
+
+.day__gameName:hover {
+    cursor: pointer;
+}

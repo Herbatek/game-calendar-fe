@@ -1,5 +1,6 @@
 import React from 'react';
-import DayPremieresItem from "./DayPremieresItem";
+import Day from "./Day";
+import InvisibleDay from "./InvisibleDays";
 import {IGame} from '../../interfaces/IGame';
 import './Calendar.css';
 
@@ -27,24 +28,31 @@ const dateConverter: Function = (dateAsString: string) => {
 const renderCalendar = (numberOfDaysInMonth: number, skipDays: number) => {
     const monthPremieresItems = [];
 
-    const tempNumberOfDays = 30;
     const games: IGame[] = [
-        {name: 'The Witcher 3 Wild Hunt', premiereDate: dateConverter("28-09-2019")},
-        {name: 'Counter Strike: Global Offensive 2', premiereDate: dateConverter("28-09-2019")},
-        {name: 'Conquer 3.0', premiereDate: dateConverter("28-09-2019")}
+        {id: 'aa-aa-bb-cc1', name: 'The Witcher 3 Wild Hunt', premiereDate: dateConverter("29-09-2019")},
+        {id: 'aa-aa-bb-cc4', name: 'Dota 2', premiereDate: dateConverter("29-09-2019")},
+        {id: 'aa-aa-bb-cc5', name: 'Left 4 Dead 2', premiereDate: dateConverter("29-09-2019")},
+        {id: 'aa-aa-bb-cc6', name: 'Heathstone', premiereDate: dateConverter("29-09-2019")},
+        {id: 'aa-aa-bb-cc2', name: 'Counter Strike: Global Offensive 2', premiereDate: dateConverter("28-09-2019")},
+        {id: 'aa-aa-bb-cc3', name: 'Conquer 3.0', premiereDate: dateConverter("27-09-2019")}
     ];
 
-    const daysPremieres = new Array(tempNumberOfDays);
-    daysPremieres.fill([]);
-    games.forEach(game => console.log(game.premiereDate));
-    games.forEach(game => daysPremieres[game.premiereDate.getDay() - 1].push(game));
+    const mockSkipDays = 6;
+    const mockNumberOfDays = 30;
+    const daysPremieres = new Array(mockNumberOfDays);
 
-    for (let i = 1; i < skipDays; i++) {
-        monthPremieresItems.push(<DayPremieresItem dayNumber={1} key={1} games={[]}/>);
+    for (let i = 0; i < mockNumberOfDays; i++) {
+        daysPremieres[i] = [];
     }
 
-    for (let i = 0; i < tempNumberOfDays; i++) {
-        monthPremieresItems.push(<DayPremieresItem dayNumber={i} key={i} games={daysPremieres[i]}/>);
+    games.forEach(game => daysPremieres[game.premiereDate.getDate() - 1].push(game));
+
+    for (let i = 0; i < mockSkipDays; i++) {
+        monthPremieresItems.push(<InvisibleDay key={`invisible-${i}`}/>);
+    }
+
+    for (let i = 0; i < mockNumberOfDays; i++) {
+        monthPremieresItems.push(<Day dayNumber={i} key={`day-${i}`} games={daysPremieres[i]}/>);
     }
 
     return monthPremieresItems;
