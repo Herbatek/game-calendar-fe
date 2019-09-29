@@ -33,6 +33,8 @@ const renderCalendar = (numberOfDaysInMonth: number, skipDays: number) => {
         {id: 'aa-aa-bb-cc4', name: 'Dota 2', premiereDate: dateConverter("29-09-2019")},
         {id: 'aa-aa-bb-cc5', name: 'Left 4 Dead 2', premiereDate: dateConverter("29-09-2019")},
         {id: 'aa-aa-bb-cc6', name: 'Heathstone', premiereDate: dateConverter("29-09-2019")},
+        {id: 'aa-aa-bb-cc7', name: 'Firewatch', premiereDate: dateConverter("29-09-2019")},
+        {id: 'aa-aa-bb-cc8', name: 'Cyberpunk', premiereDate: dateConverter("29-09-2019")},
         {id: 'aa-aa-bb-cc2', name: 'Counter Strike: Global Offensive 2', premiereDate: dateConverter("28-09-2019")},
         {id: 'aa-aa-bb-cc3', name: 'Conquer 3.0', premiereDate: dateConverter("27-09-2019")}
     ];

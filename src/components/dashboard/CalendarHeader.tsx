@@ -3,13 +3,15 @@ import {Button} from "semantic-ui-react";
 import './CalendarHeader.css';
 
 interface IProps {
-    monthName: string
+    monthName: string,
+    currentDate: Date
 }
 
 export default (props: IProps) => {
     const [isPreviousMonthAvailable, setIsPreviousMonthAvailable] = useState(false);
     const [isNextMonthAvailable, setIsNextMonthAvailable] = useState(false);
-    const {monthName} = props;
+    const [isMouseOnMonth, setIsMouseOnMonth] = useState(false);
+    const {monthName, currentDate} = props;
 
     return (
         <div className='calendarHeader'>
@@ -19,7 +21,8 @@ export default (props: IProps) => {
                     labelPosition='left'
                     disabled={!isPreviousMonthAvailable}
                     onClick={onClickPrevMonth}/>
-            <label className='calendarHeader__monthName'>{monthName}</label>
+            <label onMouseOver={() => setIsMouseOnMonth(true)} onMouseOut={() => setIsMouseOnMonth(false)}
+                   className='calendarHeader__monthName'>{isMouseOnMonth ? dateToStringConverter(currentDate) : monthName}</label>
             <Button content='Next month'
                     circular={true}
                     labelPosition='right'
@@ -28,6 +31,12 @@ export default (props: IProps) => {
                     onClick={onClickNextMonth}/>
         </div>
     )
+};
+
+const dateToStringConverter = (date: Date) => {
+    const day = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`;
+    const month = date.getMonth() > 9 ? date.getMonth() : `0${date.getMonth()}`;
+    return `${day}-${month}-${date.getFullYear()}`;
 };
 
 const onClickNextMonth = () => {

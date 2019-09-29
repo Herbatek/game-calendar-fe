@@ -13,7 +13,7 @@ interface IProps {
 
 export default (props: IProps) => {
     const [numberOfDaysInCurrentMonth, setNumberOfDaysInCurrentMonth] = useState(0);
-    const [currentMonth, setCurrentMonth] = useState('');
+    const [currentMonth, setCurrentMonth] = useState('month');
     const [games, setGames] = useState([]);
     const [firstWeekDayOfMonth, setFirstWeekDayOfMonth] = useState(0);
 
@@ -31,7 +31,7 @@ export default (props: IProps) => {
     }, []);
     return (
         <>
-            <CalendarHeader monthName={currentMonth}/>
+            <CalendarHeader monthName={currentMonth} currentDate={new Date()}/>
             <Calendar numberOfDaysInMonth={numberOfDaysInCurrentMonth} games={games} skipDays={firstWeekDayOfMonth}/>
         </>
     );
