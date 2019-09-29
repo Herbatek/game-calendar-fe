@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {IGame} from "../../interfaces/IGame";
 import './Day.css';
 
@@ -9,6 +9,7 @@ interface IProps {
 
 export default (props: IProps) => {
     const {dayNumber, games} = props;
+
     return (
         <div className='day'>
             <div className='day__header'>
